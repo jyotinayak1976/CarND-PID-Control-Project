@@ -6,16 +6,22 @@ public:
   /*
   * Errors
   */
-  double p_error;
-  double i_error;
-  double d_error;
+  double p_error = 0 ;
+  double i_error = 0;
+  double d_error = 0 ;
 
   /*
   * Coefficients
   */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  double Kp_pid;
+  double Ki_pid;
+  double Kd_pid;
+
+  bool first_cte = true;
+
+  double prev_cte ;
+  double steer;
+  double sum_cte;
 
   /*
   * Constructor

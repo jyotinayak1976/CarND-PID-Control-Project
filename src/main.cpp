@@ -33,7 +33,13 @@ int main()
   uWS::Hub h;
 
   PID pid;
-  // TODO: Initialize the pid variable.
+  // TODO: Initialize the pid variable. 
+  // This is tuned by repeatedly testing the drive by using lot of different values.
+  // I kept i and d parameter as constant and went on changing P. Between 3 and 4, the 
+  // car became relatively stable. Then I went on increasing d valie from 0.05 till 14.5 to tune it,
+  // for I, I tried from 0.00005 till 0.0002. It seems 0.0001 is fine.
+
+  pid.Init(0.039,0.0001,12);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -59,6 +65,8 @@ int main()
           */
           
           // DEBUG
+          pid.UpdateError(cte);
+          steer_value = pid.TotalError();
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           json msgJson;
